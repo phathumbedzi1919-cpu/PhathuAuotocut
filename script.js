@@ -210,7 +210,16 @@ function playSlide() {
 
 saveBtn.onclick = () => {
 
-    status.innerHTML =
-        "Video Export coming in Renderer.js...";
+    if(photos.length===0){
+
+        alert("Please add some photos.");
+
+        return;
+
+    }
+
+    status.innerHTML="Preparing Renderer...";
+
+    Renderer.start();
 
 };

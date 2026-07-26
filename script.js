@@ -1,120 +1,124 @@
-// =============================
-// AUTOCUT STUDIO
-// MAIN SCRIPT
-// =============================
+// ===============================
+// AUTOCUT STUDIO PRO
+// SCRIPT.JS (PART 1)
+// ===============================
 
+// Elements
 const imageInput = document.getElementById("imageInput");
-const addPhotoBtn = document.getElementById("addPhotoBtn");
-
 const musicInput = document.getElementById("musicInput");
-const addMusicBtn = document.getElementById("addMusicBtn");
-
 const voiceInput = document.getElementById("voiceInput");
+
+const addPhotoBtn = document.getElementById("addPhotoBtn");
+const addMusicBtn = document.getElementById("addMusicBtn");
 const addVoiceBtn = document.getElementById("addVoiceBtn");
 
 const gallery = document.getElementById("gallery");
-const preview = document.getElementById("preview");
-
-const previewBtn = document.getElementById("previewBtn");
-const saveBtn = document.getElementById("saveBtn");
 
 const photoCount = document.getElementById("photoCount");
+const musicName = document.getElementById("musicName");
+const voiceName = document.getElementById("voiceName");
+
+const preview = document.getElementById("preview");
+const previewBtn = document.getElementById("previewBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+
+const progress = document.getElementById("progress");
 const status = document.getElementById("status");
 
 const motionMode = document.getElementById("motionMode");
+const frameStyle = document.getElementById("frameStyle");
+const duration = document.getElementById("duration");
+
+const saveBtn = document.getElementById("saveBtn");
+
+// ===============================
+// DATA
+// ===============================
 
 let photos = [];
 
-let current = 0;
+let musicFile = null;
+
+let voiceFile = null;
+
+let currentSlide = 0;
 
 let slideshow = null;
 
-// =========================
-// PHOTO BUTTON
-// =========================
+// ===============================
+// BUTTONS
+// ===============================
 
-addPhotoBtn.onclick = () => {
+addPhotoBtn.onclick = () => imageInput.click();
 
-    imageInput.click();
+addMusicBtn.onclick = () => musicInput.click();
 
-};
+addVoiceBtn.onclick = () => voiceInput.click();
 
-// =========================
-// MUSIC BUTTON
-// =========================
+// ===============================
+// LOAD PHOTOS
+// ===============================
 
-addMusicBtn.onclick = () => {
+imageInput.onchange = function () {
 
-    musicInput.click();
+    const files = Array.from(this.files);
 
-};
+    files.forEach(file => {
 
-// =========================
-// VOICE BUTTON
-// =========================
+        const url = URL.createObjectURL(file);
 
-addVoiceBtn.onclick = () => {
+        photos.push(url);
 
-    voiceInput.click();
-
-};
-
-// =========================
-// LOAD PHOTO
-// =========================
-
-imageInput.onchange = e => {
-
-    const file = e.target.files[0];
-
-    if (!file) return;
-
-    photos.push(URL.createObjectURL(file));
+    });
 
     renderGallery();
 
 };
 
-// =========================
+// ===============================
 // LOAD MUSIC
-// =========================
+// ===============================
 
-musicInput.onchange = e => {
+musicInput.onchange = function () {
 
-    const file = e.target.files[0];
+    if (!this.files.length) return;
 
-    AudioEngine.loadMusic(file);
+    musicFile = this.files[0];
+
+    musicName.textContent = musicFile.name;
 
 };
 
-// =========================
+// ===============================
 // LOAD VOICE
-// =========================
+// ===============================
 
-voiceInput.onchange = e => {
+voiceInput.onchange = function () {
 
-    const file = e.target.files[0];
+    if (!this.files.length) return;
 
-    AudioEngine.loadVoice(file);
+    voiceFile = this.files[0];
+
+    voiceName.textContent = voiceFile.name;
 
 };
 
-// =========================
-// GALLERY
-// =========================
+// ===============================
+// PHOTO GALLERY
+// ===============================
 
 function renderGallery() {
 
     gallery.innerHTML = "";
 
-    photoCount.innerHTML =
+    photoCount.textContent =
         "Selected Photos : " + photos.length;
 
     photos.forEach((photo, index) => {
 
-        const div = document.createElement("div");
+        const box = document.createElement("div");
 
-        div.className = "photo";
+        box.className = "photo";
 
         const img = document.createElement("img");
 
@@ -122,9 +126,9 @@ function renderGallery() {
 
         const remove = document.createElement("button");
 
-        remove.innerHTML = "✕";
-
         remove.className = "removeBtn";
+
+        remove.innerHTML = "✕";
 
         remove.onclick = () => {
 
@@ -134,23 +138,22 @@ function renderGallery() {
 
         };
 
-        div.appendChild(img);
+        box.appendChild(img);
 
-        div.appendChild(remove);
+        box.appendChild(remove);
 
-        gallery.appendChild(div);
+        gallery.appendChild(box);
 
     });
 
-}
+            }
+// ===============================
+// PREVIEW ENGINE
+// ===============================
 
-// =========================
-// PREVIEW
-// =========================
+function playPreview() {
 
-previewBtn.onclick = () => {
-
-    if (photos.length == 0) {
+    if (photos.length === 0) {
 
         alert("Please add some photos.");
 
@@ -158,68 +161,160 @@ previewBtn.onclick = () => {
 
     }
 
-    AudioEngine.stopAll();
+    currentSlide = 0;
 
-    AudioEngine.playMusic();
+    progress.style.width = "0%";
 
-    current = 0;
+    status.textContent = "Playing Preview...";
 
-    playSlide();
+    showSlide();
 
-};
+}
 
-// =========================
-// PLAY
-// =========================
+function showSlide() {
 
-function playSlide() {
+    if (currentSlide >= photos.length) {
+
+        clearTimeout(slideshow);
+
+        status.textContent = "Preview Finished ✔";
+
+        progress.style.width = "100%";
+
+        return;
+
+    }
 
     preview.innerHTML = "";
 
     const img = document.createElement("img");
 
-    img.src = photos[current];
+    img.src = photos[currentSlide];
+
+    img.style.objectFit = "contain";
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.transition = "transform 5s linear";
 
     preview.appendChild(img);
 
-    MotionEngine.animate(
-        img,
-        motionMode.value
-    );
+    // Motion
+    if (motionMode.value === "cinematic") {
 
-    current++;
+        const motions = [
 
-    if (current >= photos.length) {
+            "scale(1.08)",
+            "scale(1.06) translateX(8px)",
+            "scale(1.06) translateX(-8px)",
+            "scale(1.06) translateY(8px)",
+            "scale(1.06) translateY(-8px)"
 
-        AudioEngine.stopMusic();
+        ];
 
-        status.innerHTML =
-            "Preview Finished ✔";
+        const motion =
+            motions[Math.floor(Math.random() * motions.length)];
 
-        return;
+        setTimeout(() => {
+
+            img.style.transform = motion;
+
+        }, 100);
+
+    } else {
+
+        const motions = [
+
+            "scale(1.02)",
+            "scale(1.01) translateX(3px)",
+            "scale(1.01) translateX(-3px)",
+            "scale(1.01) translateY(3px)",
+            "scale(1.01) translateY(-3px)"
+
+        ];
+
+        const motion =
+            motions[Math.floor(Math.random() * motions.length)];
+
+        setTimeout(() => {
+
+            img.style.transform = motion;
+
+        }, 100);
 
     }
 
-    slideshow = setTimeout(playSlide, 5000);
+    progress.style.width =
+        ((currentSlide + 1) / photos.length) * 100 + "%";
+
+    currentSlide++;
+
+    slideshow = setTimeout(
+        showSlide,
+        Number(duration.value) * 1000
+    );
 
 }
 
-// =========================
-// SAVE
-// =========================
+// ===============================
+// BUTTON EVENTS
+// ===============================
 
-saveBtn.onclick = () => {
+previewBtn.onclick = playPreview;
 
-    if(photos.length===0){
+pauseBtn.onclick = function () {
 
-        alert("Please add some photos.");
+    clearTimeout(slideshow);
+
+    status.textContent = "Preview Paused";
+
+};
+
+// ===============================
+// SAVE BUTTON
+// ===============================
+
+saveBtn.onclick = function () {
+
+    if (photos.length === 0) {
+
+        alert("Please add photos first.");
 
         return;
 
     }
 
-    status.innerHTML="Preparing Renderer...";
+    status.textContent = "Preparing video project...";
 
-    Renderer.start();
+    const project = {
+
+        photos: photos,
+
+        music: musicFile,
+
+        voice: voiceFile,
+
+        frame: frameStyle.value,
+
+        motion: motionMode.value,
+
+        duration: Number(duration.value)
+
+    };
+
+    if (typeof Renderer !== "undefined") {
+
+        Renderer.load(project);
+
+        Renderer.start();
+
+        status.textContent =
+            "Renderer Ready ✔";
+
+    } else {
+
+        status.textContent =
+            "Renderer not found.";
+
+    }
 
 };

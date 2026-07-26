@@ -6,24 +6,25 @@ font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:#111;
+background:#101010;
 color:white;
 }
 
 header{
+background:#181818;
 padding:25px;
 text-align:center;
-background:#181818;
 border-bottom:1px solid #333;
 }
 
 header h1{
-font-size:30px;
+font-size:32px;
 margin-bottom:8px;
 }
 
 header p{
 color:#bdbdbd;
+font-size:15px;
 }
 
 .container{
@@ -33,21 +34,22 @@ margin:20px auto;
 }
 
 .card{
-background:#1c1c1c;
+background:#1d1d1d;
 padding:18px;
 margin-bottom:18px;
 border-radius:18px;
-box-shadow:0 0 10px rgba(0,0,0,.35);
+box-shadow:0 0 12px rgba(0,0,0,.35);
 }
 
 .card h2{
 margin-bottom:15px;
-font-size:20px;
+font-size:21px;
 }
 
 button{
 width:100%;
-padding:14px;
+padding:15px;
+margin-top:10px;
 border:none;
 border-radius:12px;
 background:#00c853;
@@ -55,7 +57,6 @@ color:white;
 font-size:17px;
 font-weight:bold;
 cursor:pointer;
-margin-top:10px;
 transition:.25s;
 }
 
@@ -67,15 +68,25 @@ button:active{
 transform:scale(.98);
 }
 
+.controls{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.controls button{
+flex:1;
+}
+
 select{
 width:100%;
 padding:12px;
-border-radius:10px;
-border:none;
 margin-top:10px;
-font-size:16px;
-background:#2b2b2b;
+background:#2d2d2d;
 color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
 }
 
 #gallery{
@@ -101,27 +112,27 @@ border:2px solid white;
 position:absolute;
 top:5px;
 right:5px;
-width:24px;
-height:24px;
+width:28px;
+height:28px;
 border-radius:50%;
-background:red;
+background:#ff3b30;
 color:white;
 border:none;
+font-size:14px;
 cursor:pointer;
-font-size:13px;
 }
 
 #preview{
 width:270px;
 height:480px;
 margin:20px auto;
-background:#000;
+background:black;
 border:10px solid white;
 border-radius:25px;
-overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
+overflow:hidden;
 position:relative;
 }
 
@@ -129,25 +140,48 @@ position:relative;
 max-width:100%;
 max-height:100%;
 object-fit:contain;
-transition:transform 5s ease-in-out;
+transition:transform 5s linear;
 }
 
-#status{
-margin-top:15px;
-text-align:center;
-color:#bdbdbd;
+#progressBar{
+width:100%;
+height:10px;
+background:#333;
+border-radius:20px;
+margin-top:20px;
+overflow:hidden;
 }
 
+#progress{
+width:0%;
+height:100%;
+background:#00e676;
+transition:.3s;
+}
+
+#photoCount,
 #musicName,
 #voiceName,
-#photoCount{
-margin-top:10px;
-color:#bdbdbd;
+#status{
+margin-top:12px;
 text-align:center;
+color:#bdbdbd;
+font-size:15px;
 }
 
-hr{
-border:none;
-border-top:1px solid #333;
-margin:18px 0;
+@media(max-width:600px){
+
+#preview{
+
+width:240px;
+height:426px;
+
+}
+
+header h1{
+
+font-size:28px;
+
+}
+
     }

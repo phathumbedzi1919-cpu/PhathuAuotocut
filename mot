@@ -1,39 +1,3 @@
-// ===============================
-// PHATHU MOTION ENGINE (PME) V1
-// ===============================
-
-const MotionEngine = (() => {
-
-let lastMotion = -1;
-
-const preserveMotions = [
-
-{
-name:"Gentle Zoom In",
-start:"scale(1)",
-end:"scale(1.02)"
-},
-
-{
-name:"Gentle Zoom Out",
-start:"scale(1.02)",
-end:"scale(1)"
-},
-
-{
-name:"Pan Left",
-start:"translateX(0px)",
-end:"translateX(-6px)"
-},
-
-{
-name:"Pan Right",
-start:"translateX(0px)",
-end:"translateX(6px)"
-},
-
-{
-name:"Pan Up",
 start:"translateY(0px)",
 end:"translateY(-6px)"
 },

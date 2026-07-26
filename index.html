@@ -1,66 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCut Studio</title>
 
-    <link rel="stylesheet" href="style.css">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AutoCut Studio</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<div class="container">
+<header>
 
-    <h1>🎬 AutoCut Studio</h1>
-    <p>Create YouTube Shorts Automatically</p>
+<h1>🎬 AutoCut Studio</h1>
 
-    <!-- Hidden File Input -->
-    <input
-        type="file"
-        id="imageInput"
-        accept="image/*"
-        hidden>
+<p>Create Professional YouTube Shorts Offline</p>
 
-    <!-- Add Photo Button -->
-    <button id="addPhotoBtn">
-        + Add Photo
-    </button>
+</header>
 
-    <p id="photoCount">
-        Selected Photos: 0
-    </p>
+<main class="container">
 
-    <!-- Gallery -->
-    <div id="gallery"></div>
+<!-- PHOTO SECTION -->
 
-    <!-- Preview -->
-    <h2>Preview</h2>
+<section class="card">
 
-    <div id="preview">
-        No Preview Yet
-    </div>
-
-    <button id="previewBtn">
-    ▶ Preview Slideshow
-</button>
-
-<button id="addMusicBtn">
-    🎵 Add Music
-</button>
-
-<button id="saveVideoBtn">
-    🎥 Save Video
-</button>
+<h2>📷 Photos</h2>
 
 <input
-    type="file"
-    id="musicInput"
-    accept="audio/*"
-    hidden>
+type="file"
+id="imageInput"
+accept="image/*"
+hidden>
+
+<button id="addPhotoBtn">
+
+➕ Add Photo
+
+</button>
+
+<p id="photoCount">
+
+Selected Photos: 0
+
+</p>
+
+<div id="gallery"></div>
+
+</section>
+
+<!-- AUDIO -->
+
+<section class="card">
+
+<h2>🎵 Audio</h2>
+
+<input
+type="file"
+id="musicInput"
+accept="audio/*"
+hidden>
+
+<button id="addMusicBtn">
+
+🎵 Add Music
+
+</button>
+
+<p id="musicName">
+
+No music selected
+
+</p>
+
+<hr>
+
+<input
+type="file"
+id="voiceInput"
+accept="audio/*"
+hidden>
+
+<button id="addVoiceBtn">
+
+🎙 Add Voice
+
+</button>
+
+<p id="voiceName">
+
+No voice selected
+
+</p>
+
+</section>
+
+<!-- MOTION -->
+
+<section class="card">
+
+<h2>🎬 Motion</h2>
+
+<select id="motionMode">
+
+<option value="preserve">
+
+Preserve Mode (Recommended)
+
+</option>
+
+<option value="cinematic">
+
+Cinematic Mode
+
+</option>
+
+</select>
+
+</section>
+
+<!-- FRAME -->
+
+<section class="card">
+
+<h2>🖼 Frame</h2>
+
+<select id="frameStyle">
+
+<option value="white">
+
+White Canva Frame
+
+</option>
+
+<option value="black">
+
+Black Frame
+
+</option>
+
+<option value="none">
+
+No Frame
+
+</option>
+
+</select>
+
+</section>
+
+<!-- PREVIEW -->
+
+<section class="card">
+
+<h2>👀 Preview</h2>
+
+<div id="preview">
+
+Preview will appear here
 
 </div>
+
+<button id="previewBtn">
+
+▶ Preview
+
+</button>
+
+</section>
+
+<!-- EXPORT -->
+
+<section class="card">
+
+<h2>💾 Export</h2>
+
+<button id="saveBtn">
+
+💾 Save Video
+
+</button>
+
+<p id="status">
+
+Waiting...
+
+</p>
+
+</section>
+
+</main>
+
+<script src="motion.js"></script>
+
+<script src="audio.js"></script>
+
+<script src="renderer.js"></script>
 
 <script src="script.js"></script>
 
 </body>
-</html>
+
+    </html>

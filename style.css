@@ -1,3 +1,8 @@
+/* ===========================
+   AUTOCUT LITE
+   STYLE.CSS
+=========================== */
+
 *{
 margin:0;
 padding:0;
@@ -6,50 +11,64 @@ font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:#101010;
+
+background:#111;
 color:white;
+
 }
 
 header{
-background:#181818;
+
+background:#1b1b1b;
 padding:25px;
 text-align:center;
 border-bottom:1px solid #333;
+
 }
 
 header h1{
-font-size:32px;
+
+font-size:30px;
 margin-bottom:8px;
+
 }
 
 header p{
+
 color:#bdbdbd;
-font-size:15px;
+
 }
 
 .container{
+
 width:95%;
-max-width:550px;
+max-width:600px;
 margin:20px auto;
+
 }
 
 .card{
-background:#1d1d1d;
+
+background:#202020;
 padding:18px;
-margin-bottom:18px;
 border-radius:18px;
-box-shadow:0 0 12px rgba(0,0,0,.35);
+margin-bottom:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.35);
+
 }
 
 .card h2{
+
 margin-bottom:15px;
-font-size:21px;
+font-size:22px;
+
 }
 
 button{
+
 width:100%;
 padding:15px;
-margin-top:10px;
+margin-top:12px;
 border:none;
 border-radius:12px;
 background:#00c853;
@@ -58,118 +77,167 @@ font-size:17px;
 font-weight:bold;
 cursor:pointer;
 transition:.25s;
+
 }
 
 button:hover{
+
 transform:scale(1.02);
+
 }
 
 button:active{
+
 transform:scale(.98);
+
 }
 
-.controls{
+.buttons{
+
 display:flex;
 gap:10px;
 margin-top:15px;
+
 }
 
-.controls button{
+.buttons button{
+
 flex:1;
+
 }
 
 select{
+
 width:100%;
-padding:12px;
-margin-top:10px;
+padding:14px;
+margin-top:12px;
 background:#2d2d2d;
 color:white;
 border:none;
 border-radius:10px;
 font-size:16px;
+
 }
 
 #gallery{
+
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:10px;
 margin-top:15px;
+
 }
 
 .photo{
+
 position:relative;
+
 }
 
 .photo img{
+
 width:100%;
 aspect-ratio:1;
 object-fit:cover;
-border-radius:10px;
+border-radius:12px;
 border:2px solid white;
+
 }
 
 .removeBtn{
+
 position:absolute;
-top:5px;
-right:5px;
+top:6px;
+right:6px;
 width:28px;
 height:28px;
+border:none;
 border-radius:50%;
 background:#ff3b30;
 color:white;
-border:none;
 font-size:14px;
 cursor:pointer;
+padding:0;
+
 }
 
 #preview{
+
 width:270px;
 height:480px;
 margin:20px auto;
 background:black;
 border:10px solid white;
-border-radius:25px;
+border-radius:24px;
 display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
 position:relative;
+
 }
 
 #preview img{
-max-width:100%;
-max-height:100%;
+
+width:100%;
+height:100%;
 object-fit:contain;
-transition:transform 5s linear;
+transition:transform 5s linear, opacity .6s;
+
 }
 
 #progressBar{
+
 width:100%;
 height:10px;
 background:#333;
 border-radius:20px;
-margin-top:20px;
 overflow:hidden;
+margin-top:20px;
+
 }
 
 #progress{
+
 width:0%;
 height:100%;
 background:#00e676;
 transition:.3s;
+
 }
 
 #photoCount,
 #musicName,
-#voiceName,
 #status{
+
 margin-top:12px;
 text-align:center;
-color:#bdbdbd;
+color:#cfcfcf;
 font-size:15px;
+
+}
+
+label{
+
+display:block;
+margin-bottom:8px;
+font-size:15px;
+
+}
+
+input[type=file]{
+
+display:none;
+
 }
 
 @media(max-width:600px){
+
+.container{
+
+width:94%;
+
+}
 
 #preview{
 
@@ -180,7 +248,13 @@ height:426px;
 
 header h1{
 
-font-size:28px;
+font-size:26px;
+
+}
+
+button{
+
+font-size:16px;
 
 }
 

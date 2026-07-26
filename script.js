@@ -257,3 +257,96 @@ function drawFrame(image){
     ctx.drawImage(image,x,y,w,h);
 
 }
+// ======================================
+// AUTOCUT LITE
+// MEDIA RECORDER
+// PART 4
+// ======================================
+
+let recording = false;
+
+function startRecording() {
+
+    recordedChunks = [];
+
+    const stream = canvas.captureStream(30);
+
+    recorder = new MediaRecorder(stream, {
+        mimeType: "video/webm"
+    });
+
+    recorder.ondataavailable = function(e) {
+
+        if (e.data.size > 0) {
+
+            recordedChunks.push(e.data);
+
+        }
+
+    };
+
+    recorder.onstop = function() {
+
+        const blob = new Blob(recordedChunks, {
+            type: "video/webm"
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+
+        a.href = url;
+
+        a.download = "AutoCut-Video.webm";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
+
+        URL.revokeObjectURL(url);
+
+        status.textContent = "Video Saved ✔";
+
+        progress.style.width = "100%";
+
+        recording = false;
+
+    };
+
+    recorder.start();
+
+}
+
+function stopRecording() {
+
+    if (recorder && recorder.state === "recording") {
+
+        recorder.stop();
+
+    }
+
+}
+
+saveBtn.onclick = function() {
+
+    if (photos.length === 0) {
+
+        alert("Please add some photos first.");
+
+        return;
+
+    }
+
+    status.textContent = "Rendering Video...";
+
+    progress.style.width = "0%";
+
+    recording = true;
+
+    startRecording();
+
+    renderVideo();
+
+};

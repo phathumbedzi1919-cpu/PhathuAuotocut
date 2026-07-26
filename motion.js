@@ -1,0 +1,149 @@
+// ===============================
+// PHATHU MOTION ENGINE (PME) V1
+// ===============================
+
+const MotionEngine = (() => {
+
+let lastMotion = -1;
+
+const preserveMotions = [
+
+{
+name:"Gentle Zoom In",
+start:"scale(1)",
+end:"scale(1.02)"
+},
+
+{
+name:"Gentle Zoom Out",
+start:"scale(1.02)",
+end:"scale(1)"
+},
+
+{
+name:"Pan Left",
+start:"translateX(0px)",
+end:"translateX(-6px)"
+},
+
+{
+name:"Pan Right",
+start:"translateX(0px)",
+end:"translateX(6px)"
+},
+
+{
+name:"Pan Up",
+start:"translateY(0px)",
+end:"translateY(-6px)"
+},
+
+{
+name:"Pan Down",
+start:"translateY(0px)",
+end:"translateY(6px)"
+},
+
+{
+name:"Zoom Left",
+start:"scale(1)",
+end:"scale(1.01) translateX(-4px)"
+},
+
+{
+name:"Zoom Right",
+start:"scale(1)",
+end:"scale(1.01) translateX(4px)"
+},
+
+{
+name:"Zoom Up",
+start:"scale(1)",
+end:"scale(1.01) translateY(-4px)"
+},
+
+{
+name:"Zoom Down",
+start:"scale(1)",
+end:"scale(1.01) translateY(4px)"
+}
+
+];
+
+const cinematicMotions = [
+
+{
+name:"Cinema 1",
+start:"scale(1.08)",
+end:"scale(1.15) translateX(-18px)"
+},
+
+{
+name:"Cinema 2",
+start:"scale(1.08)",
+end:"scale(1.15) translateX(18px)"
+},
+
+{
+name:"Cinema 3",
+start:"scale(1.10)",
+end:"scale(1.18) translateY(-15px)"
+},
+
+{
+name:"Cinema 4",
+start:"scale(1.10)",
+end:"scale(1.18) translateY(15px)"
+}
+
+];
+
+function randomMotion(mode="preserve"){
+
+const list =
+mode==="cinematic"
+?
+cinematicMotions
+:
+preserveMotions;
+
+let random;
+
+do{
+
+random=Math.floor(Math.random()*list.length);
+
+}
+while(random===lastMotion);
+
+lastMotion=random;
+
+return list[random];
+
+}
+
+function animate(img,mode="preserve"){
+
+const motion=randomMotion(mode);
+
+img.style.opacity="0";
+
+img.style.transform=motion.start;
+
+setTimeout(()=>{
+
+img.style.opacity="1";
+
+img.style.transform=motion.end;
+
+},80);
+
+}
+
+return{
+
+animate
+
+};
+
+})();

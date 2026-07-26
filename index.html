@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCut Studio</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🎬 AutoCut Studio</h1>
+    <p>Create YouTube Shorts Automatically</p>
+
+    <!-- Hidden File Input -->
+    <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        hidden>
+
+    <!-- Add Photo Button -->
+    <button id="addPhotoBtn">
+        + Add Photo
+    </button>
+
+    <p id="photoCount">
+        Selected Photos: 0
+    </p>
+
+    <!-- Gallery -->
+    <div id="gallery"></div>
+
+    <!-- Preview -->
+    <h2>Preview</h2>
+
+    <div id="preview">
+        No Preview Yet
+    </div>
+
+    <button id="previewBtn">
+        ▶ Preview Slideshow
+    </button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

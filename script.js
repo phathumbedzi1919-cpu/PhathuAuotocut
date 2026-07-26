@@ -350,3 +350,68 @@ saveBtn.onclick = function() {
     renderVideo();
 
 };
+// ======================================
+// AUTOCUT LITE
+// VIDEO RENDERER
+// PART 5
+// ======================================
+
+async function renderVideo() {
+
+    const seconds = Number(duration.value);
+
+    const fps = 30;
+
+    const framesPerPhoto = seconds * fps;
+
+    for (let i = 0; i < photos.length; i++) {
+
+        const image = new Image();
+
+        image.src = photos[i];
+
+        await new Promise(resolve => {
+
+            image.onload = resolve;
+
+        });
+
+        for (let frame = 0; frame < framesPerPhoto; frame++) {
+
+            const zoom = 1 + (frame / framesPerPhoto) * 0.03;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // White Frame
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(30, 30, canvas.width - 60, canvas.height - 60);
+
+            const scale = Math.min(
+                (canvas.width - 100) / image.width,
+                (canvas.height - 100) / image.height
+            );
+
+            const w = image.width * scale * zoom;
+            const h = image.height * scale * zoom;
+
+            const x = (canvas.width - w) / 2;
+            const y = (canvas.height - h) / 2;
+
+            ctx.drawImage(image, x, y, w, h);
+
+            progress.style.width =
+                (((i * framesPerPhoto) + frame + 1) /
+                (photos.length * framesPerPhoto)) * 100 + "%";
+
+            await new Promise(resolve =>
+                setTimeout(resolve, 1000 / fps)
+            );
+        }
+    }
+
+    stopRecording();
+
+}

@@ -4,9 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AutoCut Studio</title>
+<title>AutoCut Studio Pro</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,15 +17,15 @@
 
 <header>
 
-<h1>🎬 AutoCut Studio</h1>
+<h1>🎬 AutoCut Studio Pro</h1>
 
 <p>Create Professional YouTube Shorts Offline</p>
 
 </header>
 
-<main class="container">
+<div class="container">
 
-<!-- PHOTO SECTION -->
+<!-- Photos -->
 
 <section class="card">
 
@@ -34,17 +35,18 @@
 type="file"
 id="imageInput"
 accept="image/*"
+multiple
 hidden>
 
 <button id="addPhotoBtn">
 
-➕ Add Photo
+➕ Add Photos
 
 </button>
 
 <p id="photoCount">
 
-Selected Photos: 0
+Selected Photos : 0
 
 </p>
 
@@ -52,11 +54,11 @@ Selected Photos: 0
 
 </section>
 
-<!-- AUDIO -->
+<!-- Music -->
 
 <section class="card">
 
-<h2>🎵 Audio</h2>
+<h2>🎵 Background Music</h2>
 
 <input
 type="file"
@@ -72,11 +74,17 @@ hidden>
 
 <p id="musicName">
 
-No music selected
+No Music Selected
 
 </p>
 
-<hr>
+</section>
+
+<!-- Voice -->
+
+<section class="card">
+
+<h2>🎙 Voice Over</h2>
 
 <input
 type="file"
@@ -92,29 +100,29 @@ hidden>
 
 <p id="voiceName">
 
-No voice selected
+No Voice Selected
 
 </p>
 
 </section>
 
-<!-- MOTION -->
+<!-- Motion -->
 
 <section class="card">
 
-<h2>🎬 Motion</h2>
+<h2>🎬 Motion Engine</h2>
 
 <select id="motionMode">
 
 <option value="preserve">
 
-Preserve Mode (Recommended)
+Preserve Motion (Recommended)
 
 </option>
 
 <option value="cinematic">
 
-Cinematic Mode
+Cinematic Motion
 
 </option>
 
@@ -122,11 +130,11 @@ Cinematic Mode
 
 </section>
 
-<!-- FRAME -->
+<!-- Frames -->
 
 <section class="card">
 
-<h2>🖼 Frame</h2>
+<h2>🖼 Picture Frame</h2>
 
 <select id="frameStyle">
 
@@ -152,7 +160,27 @@ No Frame
 
 </section>
 
-<!-- PREVIEW -->
+<!-- Duration -->
+
+<section class="card">
+
+<h2>⏱ Duration Per Photo</h2>
+
+<select id="duration">
+
+<option value="2">2 Seconds</option>
+
+<option value="3">3 Seconds</option>
+
+<option value="5" selected>5 Seconds</option>
+
+<option value="7">7 Seconds</option>
+
+</select>
+
+</section>
+
+<!-- Preview -->
 
 <section class="card">
 
@@ -160,9 +188,11 @@ No Frame
 
 <div id="preview">
 
-Preview will appear here
+<p>Preview will appear here</p>
 
 </div>
+
+<div class="controls">
 
 <button id="previewBtn">
 
@@ -170,9 +200,23 @@ Preview will appear here
 
 </button>
 
+<button id="pauseBtn">
+
+⏸ Pause
+
+</button>
+
+</div>
+
+<div id="progressBar">
+
+<div id="progress"></div>
+
+</div>
+
 </section>
 
-<!-- EXPORT -->
+<!-- Export -->
 
 <section class="card">
 
@@ -180,7 +224,7 @@ Preview will appear here
 
 <button id="saveBtn">
 
-💾 Save Video
+💾 Save MP4 Video
 
 </button>
 
@@ -192,8 +236,14 @@ Waiting...
 
 </section>
 
-</main>
+</div>
+
+<!-- Libraries -->
+
 <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+
+<!-- Project Files -->
+
 <script src="motion.js"></script>
 
 <script src="audio.js"></script>

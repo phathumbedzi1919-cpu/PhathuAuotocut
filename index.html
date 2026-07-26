@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AutoCut Studio Pro</title>
+<title>AutoCut Lite</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -17,13 +17,13 @@
 
 <header>
 
-<h1>🎬 AutoCut Studio Pro</h1>
+<h1>🎬 AutoCut Lite</h1>
 
-<p>Create Professional YouTube Shorts Offline</p>
+<p>Create YouTube Shorts Automatically</p>
 
 </header>
 
-<div class="container">
+<main class="container">
 
 <!-- Photos -->
 
@@ -46,7 +46,7 @@ hidden>
 
 <p id="photoCount">
 
-Selected Photos : 0
+Selected Photos: 0
 
 </p>
 
@@ -68,103 +68,29 @@ hidden>
 
 <button id="addMusicBtn">
 
-🎵 Add Music
+🎵 Choose Music
 
 </button>
 
 <p id="musicName">
 
-No Music Selected
+No music selected
 
 </p>
 
 </section>
 
-<!-- Voice -->
+<!-- Video Settings -->
 
 <section class="card">
 
-<h2>🎙 Voice Over</h2>
+<h2>⚙ Video Settings</h2>
 
-<input
-type="file"
-id="voiceInput"
-accept="audio/*"
-hidden>
+<label>
 
-<button id="addVoiceBtn">
+Photo Duration
 
-🎙 Add Voice
-
-</button>
-
-<p id="voiceName">
-
-No Voice Selected
-
-</p>
-
-</section>
-
-<!-- Motion -->
-
-<section class="card">
-
-<h2>🎬 Motion Engine</h2>
-
-<select id="motionMode">
-
-<option value="preserve">
-
-Preserve Motion (Recommended)
-
-</option>
-
-<option value="cinematic">
-
-Cinematic Motion
-
-</option>
-
-</select>
-
-</section>
-
-<!-- Frames -->
-
-<section class="card">
-
-<h2>🖼 Picture Frame</h2>
-
-<select id="frameStyle">
-
-<option value="white">
-
-White Canva Frame
-
-</option>
-
-<option value="black">
-
-Black Frame
-
-</option>
-
-<option value="none">
-
-No Frame
-
-</option>
-
-</select>
-
-</section>
-
-<!-- Duration -->
-
-<section class="card">
-
-<h2>⏱ Duration Per Photo</h2>
+</label>
 
 <select id="duration">
 
@@ -188,11 +114,15 @@ No Frame
 
 <div id="preview">
 
-<p>Preview will appear here</p>
+<p>
+
+Preview will appear here
+
+</p>
 
 </div>
 
-<div class="controls">
+<div class="buttons">
 
 <button id="previewBtn">
 
@@ -200,9 +130,9 @@ No Frame
 
 </button>
 
-<button id="pauseBtn">
+<button id="saveBtn">
 
-⏸ Pause
+💾 Save Video
 
 </button>
 
@@ -214,20 +144,6 @@ No Frame
 
 </div>
 
-</section>
-
-<!-- Export -->
-
-<section class="card">
-
-<h2>💾 Export</h2>
-
-<button id="saveBtn">
-
-💾 Save MP4 Video
-
-</button>
-
 <p id="status">
 
 Waiting...
@@ -236,22 +152,19 @@ Waiting...
 
 </section>
 
-</div>
+<!-- Hidden Canvas -->
 
-<!-- Libraries -->
+<canvas
+id="videoCanvas"
+width="1080"
+height="1920"
+style="display:none;">
+</canvas>
 
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
-
-<!-- Project Files -->
-
-<script src="motion.js"></script>
-
-<script src="audio.js"></script>
-
-<script src="renderer.js"></script>
+</main>
 
 <script src="script.js"></script>
 
 </body>
 
-    </html>
+</html>

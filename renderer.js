@@ -1,39 +1,143 @@
-// ===============================
-// AUTOCUT STUDIO RENDERER
-// Version 1
-// ===============================
+// ======================================
+// AUTOCUT STUDIO RENDERER ENGINE
+// Version 1.0
+// ======================================
 
 const Renderer = (() => {
 
-let isRendering = false;
+let rendering = false;
+
+let project = {};
+
+let timeline = [];
+
+
+// ==========================
+// LOAD PROJECT
+// ==========================
+
+function load(data){
+
+    project = data;
+
+    timeline = [];
+
+}
+
+
+// ==========================
+// BUILD TIMELINE
+// ==========================
+
+function buildTimeline(){
+
+    timeline = [];
+
+    let currentTime = 0;
+
+    project.photos.forEach((photo,index)=>{
+
+        timeline.push({
+
+            index:index,
+
+            image:photo,
+
+            start:currentTime,
+
+            end:currentTime+project.duration,
+
+            motion:project.motion,
+
+            frame:project.frame
+
+        });
+
+        currentTime += project.duration;
+
+    });
+
+}
+
+
+// ==========================
+// START
+// ==========================
 
 function start(){
 
-    isRendering = true;
+    rendering = true;
 
-    console.log("Renderer Started");
+    buildTimeline();
+
+    console.log("===== AUTOCUT PROJECT =====");
+
+    console.log(project);
+
+    console.log("===== TIMELINE =====");
+
+    console.table(timeline);
 
 }
+
+
+// ==========================
+// STOP
+// ==========================
 
 function stop(){
 
-    isRendering = false;
-
-    console.log("Renderer Finished");
+    rendering = false;
 
 }
 
-function getStatus(){
 
-    return isRendering;
+// ==========================
+// GET TIMELINE
+// ==========================
+
+function getTimeline(){
+
+    return timeline;
 
 }
+
+
+// ==========================
+// TOTAL DURATION
+// ==========================
+
+function totalDuration(){
+
+    return timeline.length * project.duration;
+
+}
+
+
+// ==========================
+// STATUS
+// ==========================
+
+function isRendering(){
+
+    return rendering;
+
+}
+
 
 return{
 
+    load,
+
     start,
+
     stop,
-    getStatus
+
+    getTimeline,
+
+    totalDuration,
+
+    isRendering
 
 };
 

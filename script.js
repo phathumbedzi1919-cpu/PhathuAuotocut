@@ -7,6 +7,11 @@ const photoCount = document.getElementById("photoCount");
 
 let photos = [];
 let lastMotion = -1;
+let musicFile = null;
+
+const addMusicBtn = document.getElementById("addMusicBtn");
+const musicInput = document.getElementById("musicInput");
+const saveVideoBtn = document.getElementById("saveVideoBtn");
 
 // Motion presets (safe for quotes)
 const motions = [
@@ -72,6 +77,16 @@ imageInput.onchange = (e) => {
     imageInput.value = "";
 
     renderGallery();
+    addMusicBtn.onclick = () => {
+    musicInput.click();
+};
+
+musicInput.onchange = (e) => {
+    musicFile = e.target.files[0];
+
+    if (musicFile) {
+        alert("Music added: " + musicFile.name);
+    
 
 };
 

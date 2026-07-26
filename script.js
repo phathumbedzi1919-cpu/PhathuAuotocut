@@ -288,7 +288,7 @@ function startRecording() {
     recorder.onstop = function() {
 
         const blob = new Blob(recordedChunks, {
-            type: "video/webm"
+            type: "video/mp4"
         });
 
         const url = URL.createObjectURL(blob);
@@ -297,7 +297,7 @@ function startRecording() {
 
         a.href = url;
 
-        a.download = "AutoCut-Video.webm";
+        a.download = "AutoCut-Video.mp4";
 
         document.body.appendChild(a);
 

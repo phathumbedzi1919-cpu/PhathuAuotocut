@@ -218,3 +218,42 @@ window.addEventListener("beforeunload",()=>{
     
 
 }
+// ======================================
+// AUTOCUT LITE
+// CANVAS ENGINE
+// PART 3
+// ======================================
+
+const canvas = document.getElementById("videoCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = 1080;
+canvas.height = 1920;
+
+let recorder = null;
+let recordedChunks = [];
+
+function drawFrame(image){
+
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    const scale = Math.min(
+        canvas.width / image.width,
+        canvas.height / image.height
+    );
+
+    const w = image.width * scale;
+    const h = image.height * scale;
+
+    const x = (canvas.width - w) / 2;
+    const y = (canvas.height - h) / 2;
+
+    // White frame
+    ctx.fillStyle = "white";
+    ctx.fillRect(x-20,y-20,w+40,h+40);
+
+    // Draw image
+    ctx.drawImage(image,x,y,w,h);
+
+}

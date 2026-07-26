@@ -1,72 +1,69 @@
+// =============================
+// AUTOCUT STUDIO
+// MAIN SCRIPT
+// =============================
+
 const imageInput = document.getElementById("imageInput");
 const addPhotoBtn = document.getElementById("addPhotoBtn");
+
+const musicInput = document.getElementById("musicInput");
+const addMusicBtn = document.getElementById("addMusicBtn");
+
+const voiceInput = document.getElementById("voiceInput");
+const addVoiceBtn = document.getElementById("addVoiceBtn");
+
 const gallery = document.getElementById("gallery");
 const preview = document.getElementById("preview");
+
 const previewBtn = document.getElementById("previewBtn");
+const saveBtn = document.getElementById("saveBtn");
+
 const photoCount = document.getElementById("photoCount");
+const status = document.getElementById("status");
+
+const motionMode = document.getElementById("motionMode");
 
 let photos = [];
-let lastMotion = -1;
-let musicFile = null;
 
-const addMusicBtn = document.getElementById("addMusicBtn");
-const musicInput = document.getElementById("musicInput");
-const saveVideoBtn = document.getElementById("saveVideoBtn");
+let current = 0;
 
-// Motion presets (safe for quotes)
-const motions = [
+let slideshow = null;
 
-    {
-        start: "scale(1)",
-        end: "scale(1.02)"
-    },
+// =========================
+// PHOTO BUTTON
+// =========================
 
-    {
-        start: "scale(1.02)",
-        end: "scale(1)"
-    },
-
-    {
-        start: "translateX(0px)",
-        end: "translateX(-6px)"
-    },
-
-    {
-        start: "translateX(0px)",
-        end: "translateX(6px)"
-    },
-
-    {
-        start: "translateY(0px)",
-        end: "translateY(-6px)"
-    },
-
-    {
-        start: "translateY(0px)",
-        end: "translateY(6px)"
-    },
-
-    {
-        start: "scale(1)",
-        end: "scale(1.01) translateX(4px)"
-    },
-
-    {
-        start: "scale(1)",
-        end: "scale(1.01) translateY(-4px)"
-    }
-
-];
-
-// Open picker
 addPhotoBtn.onclick = () => {
 
     imageInput.click();
 
 };
 
-// Add image
-imageInput.onchange = (e) => {
+// =========================
+// MUSIC BUTTON
+// =========================
+
+addMusicBtn.onclick = () => {
+
+    musicInput.click();
+
+};
+
+// =========================
+// VOICE BUTTON
+// =========================
+
+addVoiceBtn.onclick = () => {
+
+    voiceInput.click();
+
+};
+
+// =========================
+// LOAD PHOTO
+// =========================
+
+imageInput.onchange = e => {
 
     const file = e.target.files[0];
 
@@ -74,40 +71,60 @@ imageInput.onchange = (e) => {
 
     photos.push(URL.createObjectURL(file));
 
-    imageInput.value = "";
-
     renderGallery();
-    addMusicBtn.onclick = () => {
-    musicInput.click();
-};
-
-musicInput.onchange = (e) => {
-    musicFile = e.target.files[0];
-
-    if (musicFile) {
-        alert("Music added: " + musicFile.name);
-    
 
 };
 
-// Gallery
+// =========================
+// LOAD MUSIC
+// =========================
+
+musicInput.onchange = e => {
+
+    const file = e.target.files[0];
+
+    AudioEngine.loadMusic(file);
+
+};
+
+// =========================
+// LOAD VOICE
+// =========================
+
+voiceInput.onchange = e => {
+
+    const file = e.target.files[0];
+
+    AudioEngine.loadVoice(file);
+
+};
+
+// =========================
+// GALLERY
+// =========================
+
 function renderGallery() {
 
     gallery.innerHTML = "";
 
-    photoCount.innerHTML = "Selected Photos: " + photos.length;
+    photoCount.innerHTML =
+        "Selected Photos : " + photos.length;
 
     photos.forEach((photo, index) => {
 
         const div = document.createElement("div");
+
         div.className = "photo";
 
         const img = document.createElement("img");
+
         img.src = photo;
 
         const remove = document.createElement("button");
-        remove.className = "removeBtn";
+
         remove.innerHTML = "✕";
+
+        remove.className = "removeBtn";
 
         remove.onclick = () => {
 
@@ -118,6 +135,7 @@ function renderGallery() {
         };
 
         div.appendChild(img);
+
         div.appendChild(remove);
 
         gallery.appendChild(div);
@@ -126,10 +144,13 @@ function renderGallery() {
 
 }
 
-// Preview slideshow
+// =========================
+// PREVIEW
+// =========================
+
 previewBtn.onclick = () => {
 
-    if (photos.length === 0) {
+    if (photos.length == 0) {
 
         alert("Please add some photos.");
 
@@ -137,64 +158,59 @@ previewBtn.onclick = () => {
 
     }
 
-    let current = 0;
+    AudioEngine.stopAll();
 
-    play();
+    AudioEngine.playMusic();
 
-    function play() {
+    current = 0;
 
-        preview.innerHTML = "";
+    playSlide();
 
-        const img = document.createElement("img");
+};
 
-        img.src = photos[current];
+// =========================
+// PLAY
+// =========================
 
-        img.style.maxWidth = "100%";
-        img.style.maxHeight = "100%";
-        img.style.objectFit = "contain";
+function playSlide() {
 
-        img.style.transition =
-            "transform 5s ease-in-out, opacity .8s";
+    preview.innerHTML = "";
 
-        img.style.opacity = "0";
+    const img = document.createElement("img");
 
-        preview.appendChild(img);
+    img.src = photos[current];
 
-        setTimeout(() => {
+    preview.appendChild(img);
 
-            img.style.opacity = "1";
+    MotionEngine.animate(
+        img,
+        motionMode.value
+    );
 
-        }, 50);
+    current++;
 
-        let random;
+    if (current >= photos.length) {
 
-        do {
+        AudioEngine.stopMusic();
 
-            random = Math.floor(Math.random() * motions.length);
+        status.innerHTML =
+            "Preview Finished ✔";
 
-        } while (random === lastMotion);
-
-        lastMotion = random;
-
-        const motion = motions[random];
-
-        img.style.transform = motion.start;
-
-        setTimeout(() => {
-
-            img.style.transform = motion.end;
-
-        }, 100);
-
-        current++;
-
-        if (current < photos.length) {
-
-            setTimeout(play, 5000);
-
-        }
+        return;
 
     }
 
+    slideshow = setTimeout(playSlide, 5000);
 
-    }
+}
+
+// =========================
+// SAVE
+// =========================
+
+saveBtn.onclick = () => {
+
+    status.innerHTML =
+        "Video Export coming in Renderer.js...";
+
+};
